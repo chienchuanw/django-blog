@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+from django.shortcuts import redirect
 
 env = environ.Env()
 environ.Env.read_env()
@@ -50,6 +51,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     },
 }
+
+LOGIN_REDIRECT_URL = "/accounts/"
+LOGOUT_REDIRECT_URL = "/accounts/"
 
 ROOT_URLCONF = "core.urls"
 
