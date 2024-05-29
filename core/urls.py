@@ -6,5 +6,5 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="core/home.html"), name="home"),
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
-    path("users", include("users.urls")),
+    path("users/", include("users.urls")),
 ]
