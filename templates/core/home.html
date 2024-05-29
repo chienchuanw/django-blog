@@ -1,0 +1,8 @@
+{% extends "shared/home.html" %}
+
+{% block content %}
+<h1>Home</h1>
+<a href="{% url "users:register" %}">Register</a>
+<a href="{% url "users:login" %}">Login</a>
+
+{% endblock content %}
