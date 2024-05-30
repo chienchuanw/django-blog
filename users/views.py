@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from .forms import *
 
 
@@ -38,3 +38,15 @@ class UserLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy("home")
+
+
+class UserLogoutView(LogoutView):
+    next_page = "users:login"
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(self.request, "登出成功")
+        return super().dispatch(request, *args, **kwargs)
+
+
+class UserUpdateView(UpdateView):
+    pass

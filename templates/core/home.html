@@ -2,7 +2,16 @@
 
 {% block content %}
 <h1>Home</h1>
-<a href="{% url "users:register" %}">Register</a>
-<a href="{% url "users:login" %}">Login</a>
+<div class="flex">
+	<a href="{% url "users:register" %}">Register</a>
+	{% if user.is_authenticated %}
+	<form action="{% url 'users:logout' %}" method="post">
+		{% csrf_token %}
+		<button type="submit">Logout</button>
+	</form>
+	{% else %}
+	<a href="{% url "users:login" %}">Login</a>
+	{% endif %}
+</div>
 
 {% endblock content %}
