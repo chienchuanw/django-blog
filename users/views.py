@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import *
+from .models import *
 
 
 class UserRegisterView(FormView):
@@ -49,4 +50,25 @@ class UserLogoutView(LogoutView):
 
 
 class UserUpdateView(UpdateView):
-    pass
+    model = CustomUser
+    form_class = UserUpdateForm
+    template_name = "users/update.html"
+    success_url = "/"
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(id=self.request.user.id)
+
+
+# class UserUpdateView(LoginRequiredMixin, UpdateView):
+#     model = CustomUser
+#     form_class = UserUpdateForm
+#     template_name = "users/update.html"
+#     success_url = "/users/"
+#     login_url = "/users/"
+
+#     def get_queryset(self):
+#         return CustomUser.objects.filter(user_type=1, id=self.request.user.id)
+
+#     def form_valid(self, form):
+#         messages.success(self.request, "更新成功")
+#         return super().form_valid(form)
