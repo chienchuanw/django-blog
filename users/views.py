@@ -37,4 +37,4 @@ class UserLoginView(LoginView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy("users:home")
+        return reverse_lazy("home")
