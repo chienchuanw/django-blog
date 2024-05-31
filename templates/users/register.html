@@ -2,6 +2,30 @@
 
 {% block title %}Register{% endblock title %}
 
+{% block javascript %}
+<script defer>
+	function togglePassword() {
+		const passwordField1 = document.getElementById('id_password1');
+		const passwordField2 = document.getElementById('id_password2');
+		const eyeIcon = document.getElementById('eye-icon');
+		const eyeOpen = document.getElementById('eye-open');
+		const eyeClosed = document.getElementById('eye-closed');
+		
+		if (passwordField1.type === 'password') {
+			passwordField1.type = 'text';
+			passwordField2.type = 'text';
+			eyeOpen.style.display = 'none';
+			eyeClosed.style.display = 'block';
+		} else {
+			passwordField1.type = 'password';
+			passwordField2.type = 'password';
+			eyeOpen.style.display = 'block';
+			eyeClosed.style.display = 'none';
+		}
+	}
+</script>
+{% endblock javascript %}
+
 {% block content %}
 <section class="bg-gray-50 dark:bg-gray-900">
   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -26,6 +50,13 @@
 					<div>
 						<label for="id_password1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
 						<input type="password" name="password1" id="id_password1" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+						<span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onclick="togglePassword()">
+							<svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path id="eye-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+								<path id="eye-closed" style="display:none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19.5c-5.523 0-10-4.477-10-10S6.477 1.5 12 1.5c1.606 0 3.126.358 4.5 1" />
+							</svg>
+							Toggle to show password
+						</span>
 					</div>
 					<div>
 						<label for="id_password2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
