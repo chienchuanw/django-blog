@@ -58,17 +58,6 @@ class UserUpdateView(UpdateView):
     def get_queryset(self):
         return CustomUser.objects.filter(id=self.request.user.id)
 
-
-# class UserUpdateView(LoginRequiredMixin, UpdateView):
-#     model = CustomUser
-#     form_class = UserUpdateForm
-#     template_name = "users/update.html"
-#     success_url = "/users/"
-#     login_url = "/users/"
-
-#     def get_queryset(self):
-#         return CustomUser.objects.filter(user_type=1, id=self.request.user.id)
-
-#     def form_valid(self, form):
-#         messages.success(self.request, "更新成功")
-#         return super().form_valid(form)
+    def form_valid(self, form):
+        messages.success(self.request, "更新成功")
+        return super().form_valid(form)
