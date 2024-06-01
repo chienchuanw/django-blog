@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "users",
     "posts",
+    "comments",
 ]
 
 AUTH_USER_MODEL = "users.CustomUser"
