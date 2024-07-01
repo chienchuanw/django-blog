@@ -4,12 +4,14 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
-from .models import *
-from .forms import *
+from .models import Post
+from .forms import PostCreateForm, PostUpdateForm
 
 
 class PostListView(ListView):
-    pass
+    model = Post
+    template_name = "posts/list.html"
+    context_object_name = "posts"
 
 
 def post_list(request):

@@ -1,11 +1,10 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView, UpdateView
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import *
-from .models import *
+from .forms import UserRegisterForm, UserUpdateForm
+from .models import CustomUser
 
 
 class UserRegisterView(FormView):
