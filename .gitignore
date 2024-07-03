@@ -5,3 +5,4 @@ __pycache__
 node_modules
 static/styles/output.css
 static/scripts/output.js
+temp
