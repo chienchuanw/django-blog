@@ -11,4 +11,4 @@ class PostCreateForm(ModelForm):
 class PostUpdateForm(ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "content", "tag"]
+        fields = ["title", "content", "tags"]
