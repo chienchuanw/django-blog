@@ -8,6 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
+ADMIN_URL = env("ADMIN_URL", default="admin/")
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
