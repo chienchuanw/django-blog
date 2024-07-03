@@ -1,6 +1,33 @@
 {% extends "shared/base.html" %}
 
 {% block content %}
-
+<section class="bg-white">
+  <div class="mx-auto max-w-screen-xl ">
+		<div class="grid gap-8 lg:grid-cols-1">
+			<article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md">
+				<div class="flex justify-between items-center mb-4 text-gray-500">
+					<div>
+						{% for tag in sorted_tags %}
+						<span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
+							{{ tag }}
+						</span>
+						{% endfor %}
+					</div>
+					<span class="text-sm">{{ post.published_at|date }}</span>
+				</div>
+				<h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 "><a href="{% url "posts:detail" post.pk %}">{{ post.title }}</a></h2>
+				<p class="mb-5 font-light text-gray-500">{{ post.content }}</p>
+				<div class="flex justify-between items-center">
+					<div class="flex items-center space-x-4">
+						{% comment %} <img class="w-7 h-7 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png" alt="Bonnie Green avatar" /> {% endcomment %}
+						{% comment %} <span class="font-medium">
+								@chienchuan_w
+						</span> {% endcomment %}
+					</div>
+				</div>
+			</article>
+		</div>  
+  </div>
+</section>
 
 {% endblock content %}
