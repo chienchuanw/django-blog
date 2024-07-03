@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post
 from .forms import PostCreateForm, PostUpdateForm
 from typing import Any
+from markdown import markdown
 
 
 class PostListView(ListView):
@@ -54,6 +55,10 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         post = self.get_object()
+
+        # Convert markdown content to HTML
+        context["post"].content = markdown(post.content)
+
         # Sorted tags in each post
         context["sorted_tags"] = post.tags.all().order_by("name")
 

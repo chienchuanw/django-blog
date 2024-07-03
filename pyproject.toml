@@ -10,6 +10,7 @@ python = "^3.12"
 django = "^5.0.6"
 django-allauth = {extras = ["socialaccount"], version = "^0.63.2"}
 django-environ = "^0.11.2"
+markdown = "^3.6"
 
 
 [build-system]
