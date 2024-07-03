@@ -1,12 +1,17 @@
 {% extends "shared/base.html" %}
 {% load post_preview %}
 
+{% block title %}home{% endblock title %}
+
 {% block content %}
 <section class="bg-white">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
 		<div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
-			<h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">@chienchuan_w blog</h2>
-			<p class="font-light text-sm text-gray-500 sm:text-sm">This is my blog which will be developed gradually day by day.</p>
+			<h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">@chienchuan_w</h2>
+			<div class="font-light text-sm text-gray-500 sm:text-sm">
+				<p><a href="https://www.instagram.com/chienchuan_w/" target="__blank" class="bg-black text-white px-2 hover:bg-white hover:text-black hover:font-bold">lighting artist</a> / <a href="https://github.com/chienchuanw" target="__blank" class="bg-black text-white px-2 hover:bg-white hover:text-black hover:font-bold">full-stack engineer</a></p>
+				<p>This is my blog which will be developed gradually day by day.</p>
+			</div>
 		</div> 
 		<div class="grid gap-8 lg:grid-cols-1">
 			{% for post in posts %}
