@@ -1,6 +1,5 @@
 from pathlib import Path
 import environ
-from django.shortcuts import redirect
 
 env = environ.Env()
 environ.Env.read_env()
