@@ -8,5 +8,12 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["posts"] = Post.objects.all()
+        posts = Post.objects.all().order_by("-pk")
+
+        # Sorted tags in each post
+        for post in posts:
+            post.sorted_tags = post.tags.all().order_by("name")
+
+        context["posts"] = posts
+
         return context

@@ -20,7 +20,8 @@ class Post(models.Model):
     published_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        tags = ", ".join(f"#{tag.name}" for tag in self.tags.all())
+        return f"{self.title} ({tags})"
 
     def publish(self):
         self.published_at = timezone.now()
