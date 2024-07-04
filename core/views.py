@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from typing import Any
 from posts.models import Post
-from markdown import markdown
+from markdown import Markdown
 
 
 class HomeView(TemplateView):
@@ -16,7 +16,8 @@ class HomeView(TemplateView):
             post.sorted_tags = post.tags.all().order_by("name")
 
             # Convert markdown content to HTML
-            post.content = markdown(post.content)
+            md = Markdown(extensions=["fenced_code"])
+            post.content = md.convert(post.content)
 
         context["posts"] = posts
 
