@@ -1,8 +1,9 @@
-.venv
+.venv/
 .env
-__pycache__
+__pycache__/
 *.sqlite3
-node_modules
+node_modules/
 static/styles/output.css
 static/scripts/output.js
-temp
+temp/
+staticfiles/
