@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import HomeView
+from .views import HomeView, Custom404View
 from django.conf import settings
+from django.conf.urls import handler404
+
+handler404 = Custom404View.as_view()
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),

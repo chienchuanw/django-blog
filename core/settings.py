@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+import os
 
 env = environ.Env()
 environ.Env.read_env()
@@ -10,9 +11,9 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 ADMIN_URL = env("ADMIN_URL", default="admin/")
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -114,5 +116,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

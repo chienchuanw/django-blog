@@ -1,7 +1,8 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from typing import Any
 from posts.models import Post
 from markdown import Markdown
+from django.shortcuts import render
 
 
 class HomeView(TemplateView):
@@ -22,3 +23,8 @@ class HomeView(TemplateView):
         context["posts"] = posts
 
         return context
+
+
+class Custom404View(View):
+    def get(self, request, exception=None):
+        return render(request, "errors/404.html")
