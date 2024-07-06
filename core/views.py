@@ -1,7 +1,6 @@
 from django.views.generic import TemplateView, View
 from typing import Any
 from posts.models import Post
-from markdown import Markdown
 from django.shortcuts import render
 
 
@@ -15,10 +14,6 @@ class HomeView(TemplateView):
         for post in posts:
             # Sorted tags in each post
             post.sorted_tags = post.tags.all().order_by("name")
-
-            # Convert markdown content to HTML
-            md = Markdown(extensions=["fenced_code"])
-            post.content = md.convert(post.content)
 
         context["posts"] = posts
 
