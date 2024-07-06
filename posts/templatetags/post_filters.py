@@ -7,6 +7,7 @@ register = template.Library()
 
 
 @register.filter(name="truncate")
+@stringfilter
 def truncate_chars(value, num):
     """Replace extra text with ... if a post has too many words"""
     if len(value) > num:
