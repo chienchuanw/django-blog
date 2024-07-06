@@ -17,7 +17,7 @@ def truncate_chars(value, num):
 @register.filter(name="markdown")
 @stringfilter
 def render_markdown(value):
-    md = markdown.Markdown(extensions=["fenced_code"])
+    md = markdown.Markdown(extensions=["fenced_code", "codehilite"])
     html = md.convert(value)
 
     # Add TailwindCSS classes to the generated HTML
