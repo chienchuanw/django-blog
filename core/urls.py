@@ -10,6 +10,7 @@ urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path(settings.ADMIN_URL, admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path("markdownx/", include("markdownx.urls")),
     path("users/", include("users.urls")),
     path("posts/", include("posts.urls")),
 ]
