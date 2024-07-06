@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import CustomUser
 from django.utils import timezone
+from markdownx import models as mdx_models
 
 
 class Tag(models.Model):
@@ -16,7 +17,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255, blank=False)
-    content = models.TextField(blank=True)
+    content = mdx_models.MarkdownxField(blank=True)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name="posts")
     slug = models.SlugField(blank=True, null=True, unique=True)
