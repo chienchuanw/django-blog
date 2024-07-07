@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import CustomUser
 from django.utils import timezone
+from django.utils.text import slugify
 from markdownx import models as mdx_models
 
 
@@ -32,6 +33,11 @@ class Post(models.Model):
     def __str__(self):
         tags = ", ".join(f"#{tag.name}" for tag in self.tags.all())
         return f"{self.title} ({tags})"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def publish(self):
         self.published_at = timezone.now()
