@@ -8,6 +8,14 @@
           >chienchuanw™</a
         >
       </span>
+			{% if user.is_authenticated %}
+			<div>
+				<form action="{% url "users:logout" %}" method="post">
+					{% csrf_token %}
+					<button class="inline-flex items-center p-2 text-sm text-black bg-white text-center hover:font-bold hover:underline hover:underline-offset-4 hover:bg-black hover:text-white">logout</button>
+				</form>
+			</div>
+			{% endif %}
       <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
         <a
           href="https://www.facebook.com/chienchuan.wang/"
