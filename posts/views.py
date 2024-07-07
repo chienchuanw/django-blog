@@ -15,7 +15,7 @@ class PostListView(ListView):
 
 
 def post_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by("-pk")
     return render(request, "posts/list.html", {"posts": posts})
 
 
