@@ -3,6 +3,7 @@ from django.urls import path, include
 from .views import HomeView, Custom404View
 from django.conf import settings
 from django.conf.urls import handler404
+from django.conf.urls.static import static
 
 handler404 = Custom404View.as_view()
 
@@ -14,3 +15,6 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("posts/", include("posts.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
