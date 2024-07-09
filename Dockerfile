@@ -11,6 +11,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . /app/
 
+# Installed Node.js dependencies and build
+RUN npm install
+RUN npm run build
+
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
