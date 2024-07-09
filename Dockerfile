@@ -17,6 +17,9 @@ ENV PYTHONUNBUFFERED=1
 # Collect staticfiles
 RUN python manage.py collectstatic --noinput
 
+# Migrate database
+RUN python manage.py migrate
+
 # Expose the port the app runs on
 EXPOSE 8000
 
