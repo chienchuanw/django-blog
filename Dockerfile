@@ -14,6 +14,9 @@ COPY . /app/
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
+# Collect staticfiles
+RUN python manage.py collectstatic --noinput
+
 # Expose the port the app runs on
 EXPOSE 8000
 
