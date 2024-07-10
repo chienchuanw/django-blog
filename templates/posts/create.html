@@ -2,7 +2,7 @@
 
 {% block title %}create a post{% endblock title %}
 {% block content %}
-<div class="p-4 mx-auto max-w-2xl h-full md:h-auto">
+<div class="p-4 mx-auto max-w-2xl h-full md:h-auto" x-data="uploadImage">
   <div class="p-4 bg-white rounded-lg shadow sm:p-5">
     <div
       class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5"
@@ -11,7 +11,7 @@
         Create a New Post
       </h3>
     </div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
 			{% csrf_token %}
       <div class="gap-4 mb-4">
         <div class="mb-4">
@@ -41,19 +41,20 @@
             rows="20"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
             placeholder="Write your article here"
+						x-text="images.map(image => `![${image.name}](${image.url})`).join('\n')"
           ></textarea>
         </div>
       </div>
 			<div>
+				<input type="file" id="id_imageUpload" x-ref="imageUpload" @change="uploadImage" hidden>
 				<button
 					type="button"
-					class="text-black inline-flex items-center bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-gray-50"
+					class="text-black inline-flex items-center bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-gray-50" @click="$refs.imageUpload.click()"
 				>
 					<svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" aria-hidden="true" viewBox="0 0 20 20" version="1.1" width="16" data-view-component="true">
 						<path d="M16 13.25A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75ZM1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.94l.03-.03 6.077-6.078a1.75 1.75 0 0 1 2.412-.06L14.5 10.31V2.75a.25.25 0 0 0-.25-.25Zm12.5 11a.25.25 0 0 0 .25-.25v-.917l-4.298-3.889a.25.25 0 0 0-.344.009L4.81 13.5ZM7 6a2 2 0 1 1-3.999.001A2 2 0 0 1 7 6ZM5.5 6a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0Z"></path>
 					</svg>
 					<span>Upload files</span>
-				</button>
 				</button>
 			</div>
 			<div class="flex mt-2">
