@@ -7,3 +7,4 @@ static/styles/output.css
 static/scripts/output.js
 temp/
 staticfiles/
+media/posts/images/*.png
