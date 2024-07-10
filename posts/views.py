@@ -38,12 +38,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class ImageUploadView(FormView):
     form_class = ImageUploadForm
 
-    def form_invalid(self, form: Any) -> HttpResponse:
-        return JsonResponse({"error": "Image upload failed"}, status=400)
-
-    def form_valid(self, form):
-        image = form.save()
-        return JsonResponse({"url": image.image.url})
+    def post(self, request, *args, **kwargs):
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save()
+            return JsonResponse({"url": image.image.url})
+        else:
+            return JsonResponse({"error": "Image upload failed"}, status=400)
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
