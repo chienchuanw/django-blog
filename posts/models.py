@@ -45,5 +45,18 @@ class Post(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to="posts/images/")
+    image = models.ImageField(upload_to="posts/images/", verbose_name="Image Name")
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Image"
+        verbose_name_plural = "Images"
+
+
+class Video(models.Model):
+    video = models.FileField(upload_to="posts/videos", verbose_name="Video Name")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Video"
+        verbose_name_plural = "videos"
