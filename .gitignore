@@ -8,3 +8,5 @@ static/scripts/output.js
 temp/
 staticfiles/
 media/posts/images/*.png
+media/posts/images/*.jpg
+media/posts/videos/*.mov
