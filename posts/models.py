@@ -6,7 +6,9 @@ from markdownx import models as mdx_models
 from PIL import Image as PIL_Image
 import io
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
+from moviepy.editor import VideoFileClip
+import tempfile
+import os
 
 class Tag(models.Model):
     name = models.CharField(max_length=100, verbose_name="Tag name")
@@ -85,3 +87,45 @@ class Video(models.Model):
     class Meta:
         verbose_name = "Video"
         verbose_name_plural = "videos"
+
+    def convert_video(self, upload_video):
+        # Create a temporary video file for storing uploaded video
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_video:
+            temp_video.write(upload_video.read())
+            temp_video_path = temp_video.name
+
+        # Load video file
+        video_clip = VideoFileClip(temp_video_path)
+
+        # Create another temporary file to stored first converted file
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.webm') as output_video:
+            output_video_path = output_video.name
+
+        # Save file in webm format
+        video_clip.write_videofile(output_video_path, codec="libvpx", audio_codec="libvorbis", verbose=False)
+
+        # Close and delete temporary file
+        video_clip.close()
+        os.remove(temp_video_path)
+
+        # Read converted file
+        with open(output_video_path, 'rb') as f:
+            video_data = f.read()
+
+        # Delete temporary output file
+        os.remove(output_video_path)
+
+        # Create InMemoryUploadedFile object
+        video_io = io.BytesIO(video_data)
+        new_video = InMemoryUploadedFile(
+            video_io, None, f"{upload_video.name.split('.')[0]}.webm", "video/webm", video_io.getbuffer().nbytes, None
+        )
+        return new_video
+
+    
+    def save(self, *args, **kwargs):
+        # Covert video if it exists
+        if self.video:
+            self.video = self.convert_video(self.video)
+        return super().save(*args, **kwargs)
+
