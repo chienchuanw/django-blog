@@ -11,4 +11,5 @@ media/posts/images/*.png
 media/posts/images/*.jpg
 media/posts/images/*.webp
 media/posts/videos/*.mov
+media/posts/videos/*.webm
 .vscode/
