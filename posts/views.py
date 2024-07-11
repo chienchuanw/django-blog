@@ -1,14 +1,14 @@
 from typing import Any
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
 from .models import Post
-from .forms import PostCreateForm, PostUpdateForm, ImageUploadForm
+from .forms import PostCreateForm, PostUpdateForm, ImageUploadForm, VideoUploadForm
 
 
 class PostListView(ListView):
@@ -45,6 +45,19 @@ class ImageUploadView(FormView):
             return JsonResponse({"url": image.image.url})
         else:
             return JsonResponse({"error": "Image upload failed"}, status=400)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class VideoUploadView(FormView):
+    form_class = VideoUploadForm
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        form = VideoUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            video = form.save()
+            return JsonResponse({"url": video.video.url})
+        else:
+            return JsonResponse({"error": "Video upload failed"}, status=400)
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):

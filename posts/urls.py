@@ -5,6 +5,7 @@ from .views import (
     PostListView,
     PostDetailView,
     ImageUploadView,
+    VideoUploadView,
 )
 
 app_name = "posts"
@@ -15,4 +16,5 @@ urlpatterns = [
     path("<slug:slug>/update/", PostUpdateView.as_view(), name="update"),
     path("<slug:slug>/", PostDetailView.as_view(), name="detail"),
     path("image/upload/", ImageUploadView.as_view(), name="image_upload"),
+    path("video/upload/", VideoUploadView.as_view(), name="video_upload"),
 ]
