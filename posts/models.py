@@ -3,6 +3,9 @@ from users.models import CustomUser
 from django.utils import timezone
 from django.utils.text import slugify
 from markdownx import models as mdx_models
+from PIL import Image as PIL_Image
+import io
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 class Tag(models.Model):
@@ -47,6 +50,28 @@ class Post(models.Model):
 class Image(models.Model):
     image = models.ImageField(upload_to="posts/images/", verbose_name="Image Name")
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def compress_image(self, upload_image):
+        # Open image to load and check the picture info
+        image = PIL_Image.open(upload_image)
+
+        if image.format != "WEBP" or upload_image.size > 100 * 1024:
+            # Compress and convert image
+            image_io = io.BytesIO()
+            image.save(image_io, format="WEBP", quality=90)
+
+            # Rename image file extension to .webp
+            new_image = InMemoryUploadedFile(
+                image_io, None, f"{upload_image.name.split(".")[0]}.webp", "image/webp", image_io.getbuffer().nbytes, None
+            )
+            return new_image
+        return upload_image
+
+    def save(self, *args, **kwargs):
+        # Compress image if it exists
+        if self.image:
+            self.image = self.compress_image(self.image)
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Image"
