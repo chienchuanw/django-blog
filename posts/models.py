@@ -89,24 +89,16 @@ class Video(models.Model):
         verbose_name_plural = "videos"
 
     def convert_video(self, upload_video):
-        # Create a temporary video file for storing uploaded video
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_video:
-            temp_video.write(upload_video.read())
-            temp_video_path = temp_video.name
-
-        # Load video file
-        video_clip = VideoFileClip(temp_video_path)
-
-        # Create another temporary file to stored first converted file
+        # Create a temporary file to store a converted file
         with tempfile.NamedTemporaryFile(delete=False, suffix='.webm') as output_video:
+            output_video.write(upload_video.read())
             output_video_path = output_video.name
+        
+        # Load video file
+        video_clip = VideoFileClip(output_video_path)
 
         # Save file in webm format
         video_clip.write_videofile(output_video_path, codec="libvpx", audio_codec="libvorbis", verbose=False)
-
-        # Close and delete temporary file
-        video_clip.close()
-        os.remove(temp_video_path)
 
         # Read converted file
         with open(output_video_path, 'rb') as f:
