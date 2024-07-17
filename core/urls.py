@@ -5,6 +5,13 @@ from django.conf import settings
 from django.conf.urls import handler404
 from django.conf.urls.static import static
 
+from django.shortcuts import render
+
+
+def nav(request):
+    return render(request, "shared/base.html")
+
+
 handler404 = Custom404View.as_view()
 
 urlpatterns = [
@@ -14,6 +21,7 @@ urlpatterns = [
     path("markdownx/", include("markdownx.urls")),
     path("users/", include("users.urls")),
     path("posts/", include("posts.urls")),
+    path("nav/", nav),
 ]
 
 if settings.DEBUG:
