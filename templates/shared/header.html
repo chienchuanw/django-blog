@@ -5,9 +5,8 @@
 			<div>
 				<ul class="flex gap-10 font-normal tracking-wider text-xl">
 					<li><a href="{% url "home" %}" class="hover:underline hover:underline-offset-[5px]">Home</a></li>
-					<li><a href="{% url "posts:list" %}" class="hover:underline hover:underline-offset-[5px]">Blog</a></li>
-					<li><a href="#" class="hover:underline hover:underline-offset-[5px]">Lighting</a></li>
-					<li><a href="#" class="hover:underline hover:underline-offset-[5px]">About me</a></li>
+					{% comment %} <li><a href="{% url "posts:list" %}" class="hover:underline hover:underline-offset-[5px]">Blog</a></li> {% endcomment %}
+					<li><a href="{% url "about" %}" class="hover:underline hover:underline-offset-[5px]">About me</a></li>
 				</ul>
 			</div>
 		</div>
