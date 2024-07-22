@@ -34,7 +34,7 @@ RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate
 
 # Create superuser
-RUN python manage.py create_superuser --noinput
+RUN python manage.py create_superuser
 
 # Expose the port the app runs on
 EXPOSE 8000
