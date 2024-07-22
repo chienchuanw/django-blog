@@ -1,4 +1,3 @@
-import os
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.conf import settings
@@ -7,7 +6,7 @@ from django.conf import settings
 class Command(BaseCommand):
     help = "Create a superuser from environment variables"
 
-    def handle(self, *args: os.Any, **options: os.Any) -> str | None:
+    def handle(self, *args, **kwargs) -> str | None:
         User = get_user_model()
 
         username = settings.SUPERUSER_NAME
