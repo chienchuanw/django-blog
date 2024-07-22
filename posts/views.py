@@ -1,11 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from typing import Any
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
 from .models import Post
-from .forms import PostCreateForm, PostUpdateForm
-from typing import Any
+from .forms import PostCreateForm, PostUpdateForm, ImageUploadForm, VideoUploadForm
 
 
 class PostListView(ListView):
@@ -13,10 +16,10 @@ class PostListView(ListView):
     template_name = "posts/list.html"
     context_object_name = "posts"
 
-
-def post_list(request):
-    posts = Post.objects.all()
-    return render(request, "posts/list.html", {"posts": posts})
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["posts"] = Post.objects.all().order_by("-pk")
+        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -29,6 +32,32 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class ImageUploadView(FormView):
+    form_class = ImageUploadForm
+
+    def post(self, request, *args, **kwargs):
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save()
+            return JsonResponse({"url": image.image.url})
+        else:
+            return JsonResponse({"error": "Image upload failed"}, status=400)
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class VideoUploadView(FormView):
+    form_class = VideoUploadForm
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        form = VideoUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            video = form.save()
+            return JsonResponse({"url": video.video.url})
+        else:
+            return JsonResponse({"error": "Video upload failed"}, status=400)
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
