@@ -11,7 +11,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 ADMIN_URL = env("ADMIN_URL", default="admin/")
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
