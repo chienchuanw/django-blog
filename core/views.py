@@ -20,6 +20,10 @@ class HomeView(TemplateView):
         return context
 
 
+class AboutView(TemplateView):
+    template_name = "core/about.html"
+
+
 class Custom404View(View):
     def get(self, request, exception=None):
         return render(request, "errors/404.html")
